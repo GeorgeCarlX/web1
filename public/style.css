@@ -1,4 +1,4 @@
-/* style.css - Cyberpunk Theme with Background Animation */
+/* style.css - Neon Cyberpunk Theme with Animated Background */
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
@@ -18,24 +18,51 @@
 
 body {
   height: 100vh;
-  background: linear-gradient(270deg, #0f0f0f, #1a1a1a, #0f0f0f);
-  background-size: 600% 600%;
-  animation: backgroundShift 10s ease infinite;
-
+  overflow: hidden;
+  background-color: var(--bg-color);
   color: var(--text-color);
   font-family: 'Orbitron', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
-@keyframes backgroundShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* 背景动画：多层次流动的霓虹条纹 */
+body::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    #ff00c8,
+    #00ffe7,
+    #ff00c8,
+    #00ffe7
+  );
+  background-size: 400% 400%;
+  animation: neonFlow 15s linear infinite;
+  z-index: 0;
+  filter: blur(80px);
+  opacity: 0.5;
+}
+
+/* 动画关键帧 */
+@keyframes neonFlow {
+  0% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  100% {
+    transform: rotate(360deg) translate(0, 0);
+  }
 }
 
 .container {
+  position: relative;
+  z-index: 1;
   background: rgba(255, 255, 255, 0.05);
   border: 2px solid var(--accent-color);
   padding: 3rem;
@@ -47,6 +74,7 @@ body {
 h1 {
   margin-bottom: 1rem;
   font-size: 2rem;
+  color: var(--text-color);
 }
 
 .counter {
