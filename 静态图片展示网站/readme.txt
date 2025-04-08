@@ -1,0 +1,1 @@
+web2-easy.pages.dev
