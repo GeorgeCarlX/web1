@@ -1,15 +1,18 @@
-// index.ts
 export default {
-    async fetch(request: Request) {
-        const url = new URL(request.url);
-        if (url.pathname === '/api') {
-            const response = await fetch('https://web1.ddragonwfish.workers.dev/index.html'); // 替换为你的实际域名
-            return response;
-            //return new Response("Hello from Cloudflare Worker!");
-        } else if (url.pathname === '/' || url.pathname === '/index.html') {
-            const response = await fetch('https://web1.ddragonwfish.workers.dev/index.html'); // 替换为你的实际域名
-            return response;
-        }
-        return new Response("Not Found", { status: 404 });
-    },
+  async fetch(request: Request): Promise<Response> {
+    const url = new URL(request.url);
+    const pathname = url.pathname;
+
+    if (pathname === "/api") {
+      return new Response("Hello from Cloudflare Worker API!", {
+        status: 200,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
+
+    // 其余请求都返回静态页面（index.html）
+    return fetch("https://" + url.hostname + "/index.html", request);
+  },
 };
+
+  
