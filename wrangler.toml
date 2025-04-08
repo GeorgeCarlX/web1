@@ -1,0 +1,4 @@
+name = "web1"
+main = "index.ts"
+# main = "src/index.ts"
+compatibility_date = "2025-04-08"
