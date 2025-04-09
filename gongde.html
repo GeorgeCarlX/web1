@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点击积攒功德</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 保留木鱼游戏的特定样式 */
+        .wooden-fish-container {
+            position: relative;
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .wooden-fish {
+            width: 200px;
+            height: auto;
+            transition: transform 0.1s ease;
+        }
+
+        .wooden-fish:active {
+            transform: scale(0.95);
+        }
+
+        .stick {
+            position: absolute;
+            top: 30%;
+            right: -20%;
+            width: 20px;
+            height: 80px;
+            background-color: #a0522d;
+            border-radius: 10px;
+            transform-origin: bottom center;
+            transform: rotate(-30deg);
+            transition: transform 0.1s ease;
+        }
+
+        .stick.clicked {
+            transform: rotate(0deg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+        <a href="index.html" class="logo-link">
+            <!-- 这里替换为你的网站logo图片路径 -->
+            <img src="picture/logo.png" alt="网站logo" class="logo">
+        </a>
+        <a href="index.html">主页</a>
+        <a href="gongde.html">积攒功德</a>
+        <!-- 未来链接更多网页示例 -->
+        <!-- <a href="newpage1.html">新页面1</a>
+        <a href="newpage2.html">新页面2</a> -->
+    </div>
+    <!-- 主内容区域 -->
+    <div class="main-content">
+        <h1 class="highlight-text">点击积攒功德</h1>
+        <div class="wooden-fish-container">
+            <button id="woodenFishButton" class="focus:outline-none">
+                <img src="picture/木鱼.png" alt="Wooden Fish" class="wooden-fish">
+            </button>
+            <div class="stick" id="stick"></div>
+        </div>
+        <p id="countDisplay" class="highlight-text count-large">功德数量: 0</p>
+    </div>
+
+    <script>
+        const woodenFishButton = document.getElementById('woodenFishButton');
+        const countDisplay = document.getElementById('countDisplay');
+        const stick = document.getElementById('stick');
+        let clickCount = 0;
+
+        woodenFishButton.addEventListener('mousedown', () => {
+            stick.classList.add('clicked');
+        });
+
+        woodenFishButton.addEventListener('mouseup', () => {
+            stick.classList.remove('clicked');
+            clickCount++;
+            countDisplay.textContent = `功德数量: ${clickCount}`;
+        });
+    </script>
+</body>
+
+</html>

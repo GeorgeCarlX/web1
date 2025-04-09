@@ -1,4 +1,41 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎来到cc的赛博空间</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入粒子特效库 -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+
 <body>
-<p><a href="https://space.bilibili.com/383282823">某C啊的网站开发中，欢迎关注</a>
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+        <a href="index.html" class="logo-link">
+            <!-- 这里替换为你的网站logo图片路径 -->
+            <img src="picture/logo.png" alt="网站logo" class="logo">
+        </a>
+        <a href="index.html">主页</a>
+        <a href="gongde.html">积攒功德</a>
+        <!-- 未来链接更多网页示例 -->
+        <!-- <a href="newpage1.html">新页面1</a>
+        <a href="newpage2.html">新页面2</a> -->
+    </div>
+    <!-- 主内容区域 -->
+    <div class="main-content">
+        <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 40vh;"></div>
+        <div class="welcome-text neon-box">
+            <h1 class="neon-text">欢迎来到cc的赛博空间</h1>
+            <p><a href="https://space.bilibili.com/383282823" class="neon-text">某C啊的网站开发中，欢迎关注</a></p>
+        </div>
+    </div>
+    <script>
+        particlesJS.load('particles-js', 'particles.json', function () {
+            console.log('particles.js loaded - callback');
+        });
+    </script>
+</body>
+
 </html>

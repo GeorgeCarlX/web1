@@ -1,0 +1,119 @@
+/* 全局样式 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    /* 这里替换为你的背景图片路径 */
+    background-image: url('picture/background.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    position: relative;
+    --neon-color: #14ffc8; /* 定义 CSS 变量 */
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 40vh; /* 调整粒子特效高度 */
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    height: 100%;
+    width: 120px; /* 更小的宽度 */
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* 更透明的背景 */
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.logo {
+    width: 80px; /* 更小的 logo 图片 */
+    height: auto;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.logo-link {
+    text-align: center;
+}
+
+/* 主内容区域样式 */
+.main-content {
+    margin-left: 120px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* 让内容靠上 */
+    min-height: 100vh;
+    padding-top: 10vh; /* 上移霓虹灯牌 */
+}
+
+.welcome-text {
+    text-align: center;
+    z-index: 1;
+}
+
+.welcome-text h1 {
+    margin-bottom: 20px;
+}
+
+.welcome-text p {
+    line-height: 1.6;
+}
+
+.welcome-text a {
+    text-decoration: underline;
+}
+
+/* 霓虹效果 */
+.neon-box {
+    border-radius: 10px;
+    padding: 30px;
+    /* 这里替换为你的赛博朋克风格背景图路径 */
+    background-image: url('picture/灯牌.png');
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 10px var(--neon-color), 0 0 20px var(--neon-color), 0 0 30px var(--neon-color);
+}
+
+.neon-text {
+    color: var(--neon-color);
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         0 0 10px var(--neon-color), 0 0 20px var(--neon-color), 0 0 30px var(--neon-color);
+}
+
+/* gongde 页面样式 */
+.highlight-text {
+    color: #00008B; /* 深蓝色字体 */
+    text-align: center;
+}
+
+.count-large {
+    font-size: 2.5rem; /* 更大的计数器字体 */
+}
