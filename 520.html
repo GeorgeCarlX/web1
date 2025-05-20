@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>520 我爱你</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffcce6, #ff99cc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        #heart-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff5e8a;
+            animation: floatHeart 3s linear forwards;
+        }
+        
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-300px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        #content {
+            text-align: center;
+            color: #fff;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 80%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: scale(0.7);
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+            position: relative;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        p {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .heart-text {
+            font-size: 2.5em;
+            margin: 20px 0;
+            color: #ff5e8a;
+            animation: beat 1s infinite;
+        }
+        
+        @keyframes beat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background-color: #ff5e8a;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 94, 138, 0.4);
+        }
+        
+        #yes {
+            background-color: #4CAF50;
+        }
+        
+        #no {
+            background-color: #f44336;
+        }
+        
+        #gif-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #gif-container img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .heart-text {
+                font-size: 2em;
+            }
+            
+            #content {
+                padding: 20px;
+                max-width: 90%;
+            }
+            
+            p {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="heart-container"></div>
+    
+    <div id="content">
+        <h1>520 我爱你</h1>
+        <div class="heart-text">❤️</div>
+        <p>亲爱的，今天是520，我想对你说...</p>
+        <p>我喜欢你，喜欢你的笑容，喜欢你的声音，喜欢和你在一起的每一刻。</p>
+        <div class="btn-container">
+            <button class="btn" id="yes">愿意</button>
+            <button class="btn" id="no">不愿意</button>
+        </div>
+    </div>
+    
+    <div id="gif-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            createHeartAnimation();
+            
+            // 烟花特效
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.style.position = 'absolute';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.zIndex = '5';
+            canvas.style.pointerEvents = 'none';
+            document.body.appendChild(canvas);
+            
+            // 动态调整画布大小
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // 烟花粒子类
+            class Particle {
+                constructor(x, y, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.color = color;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedX = (Math.random() - 0.5) * 5;
+                    this.speedY = (Math.random() - 0.5) * 5;
+                    this.gravity = 0.1;
+                    this.life = 100;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.speedY += this.gravity;
+                    this.y += this.speedY;
+                    this.life--;
+                }
+                
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            // 烟花类
+            class Firework {
+                constructor(x, y, color) {
+                    this.particles = [];
+                    this.exploded = false;
+                    this.x = x;
+                    this.y = y;
+                    this.color = color;
+                    this.speedX = 0;
+                    this.speedY = -5;
+                    this.gravity = 0.1;
+                }
+                
+                update() {
+                    if (!this.exploded) {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        this.speedY += this.gravity;
+                        
+                        if (Math.random() < 0.1) {
+                            this.explode();
+                        }
+                    } else {
+                        for (let i = 0; i < this.particles.length; i++) {
+                            this.particles[i].update();
+                        }
+                        
+                        if (this.particles.every(p => p.life <= 0)) {
+                            this.reset();
+                        }
+                    }
+                }
+                
+                explode() {
+                    this.exploded = true;
+                    for (let i = 0; i < 100; i++) {
+                        this.particles.push(new Particle(this.x, this.y, this.color));
+                    }
+                }
+                
+                reset() {
+                    this.exploded = false;
+                    this.particles = [];
+                    this.x = Math.random() * canvas.width;
+                    this.y = canvas.height;
+                    this.speedX = (Math.random() - 0.5) * 3;
+                    this.speedY = -5;
+                }
+                
+                draw() {
+                    if (!this.exploded) {
+                        ctx.fillStyle = this.color;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else {
+                        for (let i = 0; i < this.particles.length; i++) {
+                            this.particles[i].draw();
+                        }
+                    }
+                }
+            }
+            
+            // 创建烟花效果
+            function createFireworks() {
+                const fireworks = [];
+                const colors = ['#ff5e8a', '#ff99cc', '#ffcce6', '#f27777', '#77d8f2'];
+                
+                function init() {
+                    for (let i = 0; i < 10; i++) {
+                        const x = Math.random() * canvas.width;
+                        const y = canvas.height;
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        fireworks.push(new Firework(x, y, color));
+                    }
+                }
+                
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    for (let i = 0; i < fireworks.length; i++) {
+                        fireworks[i].update();
+                        fireworks[i].draw();
+                    }
+                    
+                    requestAnimationFrame(animate);
+                }
+                
+                init();
+                animate();
+            }
+            
+            // 创建爱心动画
+            function createHeartAnimation() {
+                const container = document.getElementById('heart-container');
+                
+                // 初始创建100个爱心
+                for (let i = 0; i < 100; i++) {
+                    createHeartElement(container);
+                }
+                
+                // 每隔一段时间创建新的爱心
+                setInterval(() => {
+                    if (container.children.length < 100) {
+                        createHeartElement(container);
+                    }
+                }, 300);
+            }
+            
+            function createHeartElement(container) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.textContent = '❤️';
+                
+                // 随机位置
+                const left = Math.random() * 100;
+                heart.style.left = `${left}%`;
+                
+                // 随机大小
+                const size = 10 + Math.random() * 20;
+                heart.style.fontSize = `${size}px`;
+                
+                // 随机动画持续时间
+                const duration = 2 + Math.random() * 5;
+                heart.style.animation = `floatHeart ${duration}s linear forwards`;
+                
+                // 随机起始位置
+                heart.style.top = `${100 + Math.random() * 200}px`;
+                
+                // 随机颜色（粉红色系）
+                const hue = 340 + Math.random() * 20;
+                heart.style.color = `hsl(${hue}, 100%, 65%)`;
+                
+                container.appendChild(heart);
+                
+                // 动画结束后移除元素
+                setTimeout(() => {
+                    heart.remove();
+                }, duration * 1000);
+            }
+            
+            // 按钮点击事件
+            document.getElementById('yes').addEventListener('click', function() {
+                // 隐藏原始内容
+                document.getElementById('content').style.display = 'none';
+                
+                // 播放烟花特效
+                createFireworks();
+                
+                // 显示动图
+                const gifContainer = document.getElementById('gif-container');
+                const img = document.createElement('img');
+                img.src = 'https://media.tenor.com/68FbmcGRWfAAAAAC/romantic-love.gif'; // 替换为你的动图URL
+                img.alt = 'Love GIF';
+                gifContainer.appendChild(img);
+                gifContainer.style.display = 'flex';
+            });
+            
+            let noCount = 0; // 记录点击"不愿意"的次数
+            const baseYesWidth = 150; // "愿意"按钮的基础宽度
+            const baseYesHeight = 40;  // "愿意"按钮的基础高度
+            const baseNoWidth = 150;   // "不愿意"按钮的基础宽度
+            const baseNoHeight = 40;   // "不愿意"按钮的基础高度
+            
+            const yesBtn = document.getElementById('yes');
+            const noBtn = document.getElementById('no');
+            
+            // 初始化按钮大小
+            yesBtn.style.width = `${baseYesWidth}px`;
+            yesBtn.style.height = `${baseYesHeight}px`;
+            yesBtn.style.padding = '12px 30px';
+            
+            noBtn.style.width = `${baseNoWidth}px`;
+            noBtn.style.height = `${baseNoHeight}px`;
+            noBtn.style.padding = '12px 30px';
+            
+            document.getElementById('no').addEventListener('click', function() {
+                noCount++;
+                
+                // 每次点击"不愿意"，让"愿意"按钮变大，"不愿意"按钮变小
+                const yesBtn = document.getElementById('yes');
+                const noBtn = document.getElementById('no');
+                
+                // 根据点击次数调整大小
+                const newYesWidth = baseYesWidth + noCount * 30;
+                const newYesHeight = baseYesHeight + noCount * 15;
+                yesBtn.style.width = `${newYesWidth}px`;
+                yesBtn.style.height = `${newYesHeight}px`;
+                
+                const newNoWidth = baseNoWidth - noCount * 15;
+                const newNoHeight = baseNoHeight - noCount * 7;
+                noBtn.style.width = `${newNoWidth > 0 ? newNoWidth : 1}px`;
+                noBtn.style.height = `${newNoHeight > 0 ? newNoHeight : 1}px`;
+                
+                // 调整按钮内的文字大小
+                yesBtn.style.fontSize = `${1.2 + noCount * 0.2}em`;
+                noBtn.style.fontSize = `${1.2 - noCount * 0.1}em`;
+            });
+        });
+    </script>
+</body>
+</html>
